@@ -12,8 +12,10 @@ public class IngredienteService {
     @Autowired
     private IngredienteRepository repo;
 
-    public void criarIngrediente(IngredienteRequestTO novoIngrediente) {
-        repo.save(new IngredienteModel(novoIngrediente));
+    public IngredienteResponseTO criarIngrediente(IngredienteRequestTO novoIngrediente) {
+        IngredienteModel model = repo.save(new IngredienteModel(novoIngrediente));
+        
+        return new IngredienteResponseTO(model.getId(), model.getNome(), model.getQuantidade(), model.getUnidade());
     }
 
     public List<IngredienteResponseTO> listarIngredientes() {

@@ -20,9 +20,9 @@ public class IngredienteResource {
 
     @PostMapping("/adicionar")
     public ResponseEntity<IngredienteResponseTO> criarIngrediente(@RequestBody IngredienteRequestTO novoIngrediente) {
-        service.criarIngrediente(novoIngrediente);
+        IngredienteResponseTO resultado = service.criarIngrediente(novoIngrediente);
 
-        return new ResponseEntity<>(null, HttpStatus.CREATED);
+        return new ResponseEntity<IngredienteResponseTO>(resultado, HttpStatus.CREATED);
     }
 
     @GetMapping("/listar")
