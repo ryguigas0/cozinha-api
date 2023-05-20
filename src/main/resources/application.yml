@@ -1,2 +1,16 @@
+# debug: true
+
 server:
     port: 8080
+
+spring:
+    datasource:
+            driverClassName: com.mysql.jdbc.Driver
+            url: jdbc:mysql://localhost:3306/cozinha-api
+            username: "root"
+            password: "root"
+    jpa:
+        hibernate.ddl-auto: update # Coloca o que esqueci no banco de dados
+        show-sql: true
+    thymeleaf.check-template-location: false
+
