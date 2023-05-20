@@ -15,7 +15,7 @@ public class ItemPedidoResource {
     @Autowired
     ItemPedidoService service;
 
-    @PostMapping("criar")
+    @PostMapping("/criar")
     public ResponseEntity<ItemPedidoResponseTO> criarItemPedido(@RequestBody ItemPedidoRequestTO newItemPedido){
         return new ResponseEntity<ItemPedidoResponseTO>(service.criar(newItemPedido), HttpStatus.CREATED);
     }
