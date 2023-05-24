@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ItemMenuRepository extends CrudRepository<ItemMenuModel, Integer> {
 
-    @Query(value = "SELECT im.* FROM item_menu im INNER JOIN item_menu_ingrediente imi ON imi.item_menu_id = im.id INNER JOIN ingrediente i ON imi.ingrediente_id = i.id WHERE imi.quantidade_ingrediente <= i.quantidade;", nativeQuery = true)
+    @Query(value = "SELECT distinct im.* FROM item_menu im INNER JOIN item_menu_ingrediente imi ON imi.item_menu_id = im.id INNER JOIN ingrediente i ON imi.ingrediente_id = i.id WHERE imi.quantidade_ingrediente <= i.quantidade;", nativeQuery = true)
     List<ItemMenuModel> encontrarTodosDisponiveis();
 
 }
