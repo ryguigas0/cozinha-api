@@ -23,7 +23,8 @@ public class ItemMenuService {
         ItemMenuModel modelo = repo.save(new ItemMenuModel(novoItemMenu));
 
         for (IngredienteReferenciaRequestTO ingredienteReferencia : novoItemMenu.ingredientes()) {
-            itemMenuIngredienteService.criar(new ItemMenuIngredienteRequestTO(ingredienteReferencia.id(), ingredienteReferencia.quantidade(), modelo.getId()));
+            itemMenuIngredienteService.criar(new ItemMenuIngredienteRequestTO(ingredienteReferencia.id(),
+                    ingredienteReferencia.quantidade(), modelo.getId()));
         }
 
         return new ItemMenuResponseTO(modelo.getId(), modelo.getNome(), modelo.getDescricao(), modelo.getPreco());
@@ -32,9 +33,16 @@ public class ItemMenuService {
     public List<ItemMenuResponseTO> listar() {
         List<ItemMenuResponseTO> output = new ArrayList<>();
 
-        repo.encontrarTodosDisponiveis().forEach(i -> output.add(new ItemMenuResponseTO(i.getId(), i.getNome(), i.getDescricao(), i.getPreco())));
+        repo.encontrarTodosDisponiveis().forEach(
+                i -> output.add(new ItemMenuResponseTO(i.getId(), i.getNome(), i.getDescricao(), i.getPreco())));
 
         return output;
+    }
+
+    public ItemMenuResponseTO buscar(int id) {
+        return repo.findById(id)
+                .map(m -> new ItemMenuResponseTO(m.getId(), m.getNome(), m.getDescricao(), m.getPreco()))
+                .orElseThrow();
     }
 
 }

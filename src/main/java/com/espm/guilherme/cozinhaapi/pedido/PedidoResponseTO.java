@@ -1,9 +1,10 @@
 package com.espm.guilherme.cozinhaapi.pedido;
 
-public record PedidoResponseTO(int id, String status) {
-    public PedidoResponseTO(int id, int status) {
-        this(id, parseStatus(status));
+import java.util.List;
 
+public record PedidoResponseTO(int id, String status, List<ItemMenuReferenciaResponseTO> items) {
+    public PedidoResponseTO(int id, int status, List<ItemMenuReferenciaResponseTO> items) {
+        this(id, parseStatus(status), items);
     }
 
     private static String parseStatus(int status) {

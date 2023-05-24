@@ -1,4 +1,4 @@
-package com.espm.guilherme.cozinhaapi.itemPedido;
+package com.espm.guilherme.cozinhaapi.itemMenuPedido;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "pedido_item_menu")
-public class ItemPedidoModel {
+public class ItemMenuPedidoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -20,10 +20,10 @@ public class ItemPedidoModel {
     @Column(name = "item_menu_id")
     private int itemMenuId;
 
-    public ItemPedidoModel() {
+    public ItemMenuPedidoModel() {
     }
 
-    public ItemPedidoModel(ItemPedidoRequestTO to) {
+    public ItemMenuPedidoModel(ItemMenuPedidoRequestTO to) {
         this.pedidoId = to.pedidoId();
         this.itemMenuId = to.itemMenuId();
     }

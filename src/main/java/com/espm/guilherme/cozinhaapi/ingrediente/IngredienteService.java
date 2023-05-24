@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class IngredienteService {
-    
+
     @Autowired
     private IngredienteRepository repo;
 
     public IngredienteResponseTO criarIngrediente(IngredienteRequestTO novoIngrediente) {
         IngredienteModel model = repo.save(new IngredienteModel(novoIngrediente));
-        
+
         return new IngredienteResponseTO(model.getId(), model.getNome(), model.getQuantidade(), model.getUnidade());
     }
 
@@ -22,8 +22,13 @@ public class IngredienteService {
 
         List<IngredienteResponseTO> output = new ArrayList<>();
 
-        repo.findAll().forEach(ingr -> output.add(new IngredienteResponseTO(ingr.getId(), ingr.getNome(), ingr.getQuantidade(), ingr.getUnidade())));
+        repo.findAll().forEach(ingr -> output
+                .add(new IngredienteResponseTO(ingr.getId(), ingr.getNome(), ingr.getQuantidade(), ingr.getUnidade())));
 
         return output;
+    }
+
+    public IngredienteResponseTO buscar(int ingredienteId) {
+        return repo.findById(ingredienteId).map(m -> new IngredienteResponseTO(m.getId(), m.getNome(), m.getQuantidade(), m.getUnidade())).orElseThrow();
     }
 }

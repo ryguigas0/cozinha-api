@@ -1,5 +1,5 @@
 package com.espm.guilherme.cozinhaapi.pedido;
 
-public record PedidoRequestTO(ItemMenuReferenciaTO[] items) {
+public record PedidoRequestTO(ItemMenuReferenciaRequestTO[] items) {
     
 }
