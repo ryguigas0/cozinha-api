@@ -6,15 +6,25 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.espm.guilherme.cozinhaapi.itemMenuIngrediente.ItemMenuIngredienteRequestTO;
+import com.espm.guilherme.cozinhaapi.itemMenuIngrediente.ItemMenuIngredienteService;
+
 @Service
 public class ItemMenuService {
 
     @Autowired
     ItemMenuRepository repo;
 
+    @Autowired
+    ItemMenuIngredienteService itemMenuIngredienteService;
+
     public ItemMenuResponseTO criar(ItemMenuRequestTO novoItemMenu) {
 
         ItemMenuModel modelo = repo.save(new ItemMenuModel(novoItemMenu));
+
+        for (IngredienteReferenciaRequestTO ingredienteReferencia : novoItemMenu.ingredientes()) {
+            itemMenuIngredienteService.criar(new ItemMenuIngredienteRequestTO(ingredienteReferencia.id(), ingredienteReferencia.quantidade(), modelo.getId()));
+        }
 
         return new ItemMenuResponseTO(modelo.getId(), modelo.getNome(), modelo.getDescricao(), modelo.getPreco());
     }

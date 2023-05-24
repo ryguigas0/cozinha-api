@@ -6,14 +6,24 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.espm.guilherme.cozinhaapi.itemPedido.ItemPedidoRequestTO;
+import com.espm.guilherme.cozinhaapi.itemPedido.ItemPedidoService;
+
 @Service
 public class PedidoService {
 
     @Autowired
     PedidoRepository repo;
 
-    public PedidoResponseTO criarPedido() {
+    @Autowired
+    ItemPedidoService itemPedidoService;
+
+    public PedidoResponseTO criarPedido(PedidoRequestTO novoPedido) {
         PedidoModel model = repo.save(new PedidoModel());
+
+        for (ItemMenuReferenciaTO itemMenuReferencia : novoPedido.items()) {
+            itemPedidoService.criar(new ItemPedidoRequestTO(model.getId(), itemMenuReferencia.id()));
+        }
 
         return new PedidoResponseTO(model.getId(), model.getStatus());
     }

@@ -12,10 +12,8 @@
 - Listar ingredientes: `GET /ingrediente/listar`
 - Criar item de menu: `POST /menu/criar`
 - Listar itens de menu: `POST /menu/listar`
-- Associar ingrediente a item do menu: `POST /menu/item/ingrediente/criar`
 - Criar pedido: `POST /pedido/criar`
 - Listar pedidos: `GET /pedido/listar`
 - Atualizar pedido: `PUT /pedido/atualizar`
-- Associar item de menu a pedido: `POST /pedido/item/criar`
 
 Coleção de requisições e formato disponível na coleção do [Insomnia](https://insomnia.rest/): `insomnia_collection`

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,8 +21,8 @@ public class PedidoResource {
     PedidoService service;
 
     @PostMapping("/criar")
-    public ResponseEntity<PedidoResponseTO> criarPedido() {
-        return new ResponseEntity<PedidoResponseTO>(service.criarPedido(), HttpStatus.CREATED);
+    public ResponseEntity<PedidoResponseTO> criarPedido(@RequestBody PedidoRequestTO novoPedido) {
+        return new ResponseEntity<PedidoResponseTO>(service.criarPedido(novoPedido), HttpStatus.CREATED);
     }
 
     @GetMapping("/listar")
