@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,6 +26,11 @@ public class CozinhaResource {
         return new ResponseEntity<List<PedidoResponseTO>>(service.listarPedidos(situacao), HttpStatus.OK);
     }
 
+    @GetMapping("/listar/preparar")
+    public ResponseEntity<List<PedidoResponseTO>> listarPedidosPreparar() {
+        return new ResponseEntity<List<PedidoResponseTO>>(service.listarPedidos(1), HttpStatus.OK);
+    }
+
     @PutMapping("/preparar")
     public ResponseEntity<CozinhaResponse> prepararPedido(
             @RequestParam(name = "pedidoId", required = true) int pedidoId) {
@@ -40,13 +44,32 @@ public class CozinhaResource {
 
     }
 
-    // @PutMapping("/servir")
-    // public ResponseEntity<?> servirPedido() {
+    @PutMapping("/servir")
+    public ResponseEntity<CozinhaResponse> servirPedido(
+            @RequestParam(name = "pedidoId", required = false) int pedidoId) {
 
-    // }
+        CozinhaResponse response = service.servirPedido(pedidoId);
 
-    // @PutMapping("/cancelar")
-    // public ResponseEntity<?> cancelarPedido(){
-    // }
+        if (response.resultCode() < 0) {
+            return new ResponseEntity<CozinhaResponse>(response, HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity<CozinhaResponse>(response, HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @PutMapping("/cancelar")
+    public ResponseEntity<CozinhaResponse> cancelarPedido(
+            @RequestParam(name = "pedidoId", required = false) int pedidoId) {
+
+        CozinhaResponse response = service.cancelarPedido(pedidoId);
+
+        if (response.resultCode() < 0) {
+            return new ResponseEntity<CozinhaResponse>(response, HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity<CozinhaResponse>(response, HttpStatus.BAD_REQUEST);
+        }
+
+    }
 
 }

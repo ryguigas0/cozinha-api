@@ -82,4 +82,28 @@ public class CozinhaService {
         return ingredienteIdQuantidade;
     }
 
+    public CozinhaResponse servirPedido(int pedidoId) {
+        PedidoResponseTO pedido = pedidoService.buscarPorPedidoId(pedidoId);
+
+        if (pedido.statusNumber() != 3) {
+            return new CozinhaResponse(-2);
+        }
+
+        pedidoService.atualizarPedido(pedidoId, 4);
+
+        return new CozinhaResponse(0);
+    }
+
+    public CozinhaResponse cancelarPedido(int pedidoId) {
+        PedidoResponseTO pedido = pedidoService.buscarPorPedidoId(pedidoId);
+
+        if (pedido.statusNumber() == 4 || pedido.statusNumber() == 0) {
+            return new CozinhaResponse(-2);
+        }
+
+        pedidoService.atualizarPedido(pedidoId, 0);
+
+        return new CozinhaResponse(0);
+    }
+
 }
