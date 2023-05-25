@@ -1,10 +1,14 @@
 # Cozinha API - Prova 1 de Programação Orientada a Objetos
 
-## Como rodar
+## Como instalar e rodar o projeto
 
 1. Clone o projeto
-2. `mvn clean install` ou `./mvnw clean install`
-3. `java -jar target/cozinha-api-0.0.1-SNAPSHOT.jar`
+   1. Git + HTTPS: `git clone https://github.com/ryguigas0/cozinha-api.git`
+   2. Git + SSH: `git clone git@github.com:ryguigas0/cozinha-api.git`
+   3. Github CLI: `gh repo clone ryguigas0/cozinha-api`
+2. ` mysql -u root -p < src/main/resources/ddl.sql ` (cria o banco de dados e tabelas do projeto)
+3. `mvn clean install` ou `./mvnw clean install`
+4. `java -jar target/cozinha-api-0.0.1-SNAPSHOT.jar`
 
 ## Rotas adicionais
 
