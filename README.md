@@ -192,7 +192,7 @@
 ]
 ```
 
-- Listar pedidos: `GET /pedido/listar`, ordenado do pedido mais velho ao mais recente e aceita o parâmetro `situacao` para filtrar pedidos por situacao, se não for fornecido lista todos os pedidos
+- Listar pedidos: `GET /cozinha/pedido/listar`, ordenado do pedido mais velho ao mais recente e aceita o parâmetro `situacao` para filtrar pedidos por situacao, se não for fornecido lista todos os pedidos
   - `?situacao=0` corresponde a `CANCELADO`
   - `?situacao=1` corresponde a `AGUARDANDO`
   - `?situacao=2` corresponde a `PREPARANDO`
