@@ -29,6 +29,30 @@ public class IngredienteService {
     }
 
     public IngredienteResponseTO buscar(int ingredienteId) {
-        return repo.findById(ingredienteId).map(m -> new IngredienteResponseTO(m.getId(), m.getNome(), m.getQuantidade(), m.getUnidade())).orElseThrow();
+        return repo.findById(ingredienteId)
+                .map(m -> new IngredienteResponseTO(m.getId(), m.getNome(), m.getQuantidade(), m.getUnidade()))
+                .orElseThrow();
+    }
+
+    public boolean quantidadeSuficiente(int ingredienteId, int quantidadeNecessaria) {
+        try {
+            IngredienteResponseTO ingrediente = buscar(ingredienteId);
+
+            return ingrediente.quantidade() >= quantidadeNecessaria;
+        } catch (Exception e) {
+            return false;
+        }
+
+    }
+
+    public int reduzirQuantidade(int ingredienteId, int quantidadeReduzir) {
+        if (quantidadeReduzir < 0) {
+            throw new RuntimeException("NÃO PODE REDUZIR QUANTIDADE DE INGREDIENTE NEGATIVA");
+        }
+
+        return repo.findById(ingredienteId)
+                .map(ingr -> repo.atualizarQuantidade(ingr.getId(), ingr.getQuantidade() - quantidadeReduzir))
+                .stream().reduce(0, (acc, elem) -> acc + elem);
+
     }
 }

@@ -55,4 +55,10 @@ public class IngredienteModel {
         return unidade;
     }
 
+    @Override
+    public String toString() {
+        return "IngredienteModel [id=" + id + ", nome=" + nome + ", quantidade=" + quantidade + ", unidade=" + unidade
+                + "]";
+    }
+
 }

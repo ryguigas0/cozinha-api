@@ -16,7 +16,7 @@ public class PedidoModel {
     private int id;
 
     @Column(name = "status", columnDefinition = "integer default 1")
-    private int status = 1; // AGUARDANDO = 1, PREPARANDO = 2, PRONTO = 3, SERVIDO = 4
+    private int status = 1; // CANCELADO = 0, AGUARDANDO = 1, PREPARANDO = 2, PRONTO = 3, SERVIDO = 4
 
     public PedidoModel() {
     }

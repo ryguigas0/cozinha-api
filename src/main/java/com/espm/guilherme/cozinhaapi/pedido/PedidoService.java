@@ -42,7 +42,8 @@ public class PedidoService {
             List<ItemMenuIngredienteReferenciaResponseTO> ingredientes = itemMenuIngredienteService
                     .listarIngredientesPorItemMenuID(itemMenuReferencia.id())
                     .stream()
-                    .map(ingr -> new ItemMenuIngredienteReferenciaResponseTO(ingr.nome(), ingr.quantidadeNecessaria()))
+                    .map(ingr -> new ItemMenuIngredienteReferenciaResponseTO(ingr.id(), ingr.nome(),
+                            ingr.quantidadeNecessaria()))
                     .toList();
 
             // Pega o item de menu do pedido
@@ -57,23 +58,25 @@ public class PedidoService {
     public List<PedidoResponseTO> listarPedidos(int situacao) {
         List<PedidoResponseTO> output = new ArrayList<>();
 
-        if (situacao == 0) {
-            repo.findAll()
-                    .forEach(p -> output
-                            .add(new PedidoResponseTO(p.getId(), p.getStatus(), getItensMenuReferenciaResponseTOs(p))));
-        } else {
-            repo.listarPorStatus(situacao)
-                    .forEach(p -> output
-                            .add(new PedidoResponseTO(p.getId(), p.getStatus(), getItensMenuReferenciaResponseTOs(p))));
-        }
+        repo.listarPorStatus(situacao)
+                .forEach(p -> output
+                        .add(new PedidoResponseTO(p.getId(), p.getStatus(), getItensMenuReferenciaResponseTOs(p))));
+
+        return output;
+    }
+
+    public List<PedidoResponseTO> listarPedidos() {
+        List<PedidoResponseTO> output = new ArrayList<>();
+
+        repo.findAll()
+                .forEach(p -> output
+                        .add(new PedidoResponseTO(p.getId(), p.getStatus(), getItensMenuReferenciaResponseTOs(p))));
 
         return output;
     }
 
     public PedidoResponseTO atualizarPedido(int pedidoId, int situacaoNova) {
-        int i = repo.atualizarPedido(pedidoId, situacaoNova);
-
-        System.out.println("Update result " + i);
+        repo.atualizarPedido(pedidoId, situacaoNova);
 
         PedidoModel pedido = repo.findById(pedidoId).get();
 
@@ -93,6 +96,7 @@ public class PedidoService {
                     .listarIngredientesPorItemMenuID(itemMenuPedidoResponseTO.itemMenuId())
                     .stream()
                     .map(ingredienteReferenciaResponseTO -> new ItemMenuIngredienteReferenciaResponseTO(
+                            ingredienteReferenciaResponseTO.id(),
                             ingredienteReferenciaResponseTO.nome(),
                             ingredienteReferenciaResponseTO.quantidadeNecessaria()))
                     .toList();
@@ -103,6 +107,11 @@ public class PedidoService {
         }
 
         return output;
+    }
+
+    public PedidoResponseTO buscarPorPedidoId(int pedidoId) {
+        return repo.findById(pedidoId).map(pedido -> new PedidoResponseTO(pedido.getId(), pedido.getStatus(),
+                getItensMenuReferenciaResponseTOs(pedido))).orElse(new PedidoResponseTO(0, 0, null));
     }
 
 }

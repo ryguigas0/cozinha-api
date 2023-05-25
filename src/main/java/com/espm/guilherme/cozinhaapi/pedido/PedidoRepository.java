@@ -12,7 +12,7 @@ import jakarta.transaction.Transactional;
 @Transactional
 public interface PedidoRepository extends CrudRepository<PedidoModel, Integer>{
 
-    @Query( value = "select p.* from pedido p where p.status = :situacao", nativeQuery = true)
+    @Query( value = "select p.* from pedido p where p.status = :situacao order by p.data_criacao desc", nativeQuery = true)
     List<PedidoModel> listarPorStatus(int situacao);
 
     @Modifying()

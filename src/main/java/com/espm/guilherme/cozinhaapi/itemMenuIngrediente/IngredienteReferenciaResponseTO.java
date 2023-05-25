@@ -1,5 +1,5 @@
 package com.espm.guilherme.cozinhaapi.itemMenuIngrediente;
 
-public record IngredienteReferenciaResponseTO(String nome, int quantidadeNecessaria) {
+public record IngredienteReferenciaResponseTO(int id, String nome, int quantidadeNecessaria) {
 
 }

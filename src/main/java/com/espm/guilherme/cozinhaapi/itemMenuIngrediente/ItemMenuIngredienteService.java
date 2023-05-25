@@ -30,7 +30,8 @@ public class ItemMenuIngredienteService {
         for (ItemMenuIngredienteModel itemMenuIngrediente : listItemMenuIngrediente) {
             IngredienteResponseTO ingrediente = ingredienteService.buscar(itemMenuIngrediente.getIngredienteId());
 
-            ingredientesResponseTO.add(new IngredienteReferenciaResponseTO(ingrediente.nome(), itemMenuIngrediente.getQuantidadeIngrediente()));
+            ingredientesResponseTO.add(new IngredienteReferenciaResponseTO(ingrediente.id(), ingrediente.nome(),
+                    itemMenuIngrediente.getQuantidadeIngrediente()));
         }
 
         return ingredientesResponseTO;
