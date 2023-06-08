@@ -2,10 +2,27 @@ package com.espm.guilherme.cozinhaapi.pedido;
 
 import java.util.List;
 
-public record PedidoResponseTO(int id, int clienteId, String status, int statusNumber,
+public record PedidoResponseTO(int id, double total, int clienteId, String status, int statusNumber,
         List<ItemMenuReferenciaResponseTO> items) {
-    public PedidoResponseTO(int id, int clienteId, int status, List<ItemMenuReferenciaResponseTO> items) {
-        this(id, clienteId, parseStatus(status), status, items);
+    public PedidoResponseTO(int id, double total, int clienteId, int status, List<ItemMenuReferenciaResponseTO> items) {
+        this(id, total, clienteId, parseStatus(status), status, items);
+    }
+
+    public PedidoResponseTO(int id, int clienteId, int status,
+            List<ItemMenuReferenciaResponseTO> items) {
+
+        this(id, calcularTotal(items), clienteId, parseStatus(status), status, items);
+    }
+
+    private static Double calcularTotal(List<ItemMenuReferenciaResponseTO> items) {
+
+        double total = 0.0;
+
+        for (ItemMenuReferenciaResponseTO itemMenuReferenciaResponseTO : items) {
+            total += itemMenuReferenciaResponseTO.preco();
+        }
+
+        return total;
     }
 
     private static String parseStatus(int status) {

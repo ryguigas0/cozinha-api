@@ -11,8 +11,10 @@ public class ItemMenuPedidoService {
     @Autowired
     ItemMenuPedidoRepository repo;
 
-    public void criar(ItemMenuPedidoRequestTO newItemPedido) {
-        repo.save(new ItemMenuPedidoModel(newItemPedido));
+    public ItemMenuPedidoResponseTO criar(ItemMenuPedidoRequestTO newItemPedido) {
+        ItemMenuPedidoModel model = repo.save(new ItemMenuPedidoModel(newItemPedido));
+
+        return new ItemMenuPedidoResponseTO(model.getId(),  model.getPedidoId(), model.getItemMenuId());
     }
 
     public List<ItemMenuPedidoResponseTO> listarItemMenuPorPedidoID(int pedidoId) {

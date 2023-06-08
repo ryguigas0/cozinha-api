@@ -33,7 +33,11 @@ public class PedidoService {
 
         List<ItemMenuReferenciaResponseTO> itensPedido = new ArrayList<>();
 
+        double total = 0.0;
+
         for (ItemMenuReferenciaRequestTO itemMenuReferencia : novoPedido.items()) {
+            // adicionar o valor total
+
             // Associar o pedido ao item de menu
             itemPedidoService.criar(new ItemMenuPedidoRequestTO(pedido.getId(), itemMenuReferencia.id()));
 
@@ -49,10 +53,13 @@ public class PedidoService {
             // Pega o item de menu do pedido
             ItemMenuResponseTO itemMenu = itemMenuService.buscar(itemMenuReferencia.id());
 
-            itensPedido.add(new ItemMenuReferenciaResponseTO(itemMenu.nome(), ingredientes));
+            total += itemMenu.preco();
+
+            itensPedido.add(new ItemMenuReferenciaResponseTO(itemMenu.nome(), itemMenu.preco(), ingredientes));
         }
 
-        return new PedidoResponseTO(pedido.getId(), pedido.getClienteId(), pedido.getStatus(), itensPedido);
+        return new PedidoResponseTO(pedido.getId(), total, pedido.getClienteId(), pedido.getStatus(),
+                itensPedido);
     }
 
     public List<PedidoResponseTO> listarPedidos(int situacao) {
@@ -104,9 +111,9 @@ public class PedidoService {
                             ingredienteReferenciaResponseTO.quantidadeNecessaria()))
                     .toList();
 
-            String nomeItemMenu = itemMenuService.buscar(itemMenuPedidoResponseTO.itemMenuId()).nome();
+            ItemMenuResponseTO itemMenu = itemMenuService.buscar(itemMenuPedidoResponseTO.itemMenuId());
 
-            output.add(new ItemMenuReferenciaResponseTO(nomeItemMenu, ingredientes));
+            output.add(new ItemMenuReferenciaResponseTO(itemMenu.nome(), itemMenu.preco(), ingredientes));
         }
 
         return output;
