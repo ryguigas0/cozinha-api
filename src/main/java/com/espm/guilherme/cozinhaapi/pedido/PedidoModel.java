@@ -18,7 +18,14 @@ public class PedidoModel {
     @Column(name = "status", columnDefinition = "integer default 1")
     private int status = 1; // CANCELADO = 0, AGUARDANDO = 1, PREPARANDO = 2, PRONTO = 3, SERVIDO = 4
 
+    @Column(name = "cliente_id")
+    private int clienteId;
+
     public PedidoModel() {
+    }
+
+    public PedidoModel(PedidoRequestTO novoPedido) {
+        this.clienteId = novoPedido.clienteId();
     }
 
     public int getId() {
@@ -27,6 +34,10 @@ public class PedidoModel {
 
     public int getStatus() {
         return status;
+    }
+
+    public int getClienteId() {
+        return clienteId;
     }
 
 }
