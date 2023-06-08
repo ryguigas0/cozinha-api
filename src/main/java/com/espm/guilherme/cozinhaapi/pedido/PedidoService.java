@@ -55,7 +55,8 @@ public class PedidoService {
 
             total += itemMenu.preco();
 
-            itensPedido.add(new ItemMenuReferenciaResponseTO(itemMenu.nome(), itemMenu.preco(), ingredientes));
+            itensPedido.add(new ItemMenuReferenciaResponseTO(itemMenu.nome(), itemMenu.preco(),
+                    ingredientes));
         }
 
         return new PedidoResponseTO(pedido.getId(), total, pedido.getClienteId(), pedido.getStatus(),
@@ -96,11 +97,10 @@ public class PedidoService {
     private List<ItemMenuReferenciaResponseTO> getItensMenuReferenciaResponseTOs(PedidoModel pedido) {
         List<ItemMenuReferenciaResponseTO> output = new ArrayList<>();
 
-        List<ItemMenuPedidoResponseTO> itensMenuPedido = itemPedidoService.listarItemMenuPorPedidoID(pedido.getId());
+        List<ItemMenuPedidoResponseTO> itensMenuPedido = itemPedidoService
+                .listarItemMenuPorPedidoID(pedido.getId());
 
         for (ItemMenuPedidoResponseTO itemMenuPedidoResponseTO : itensMenuPedido) {
-
-            System.out.println(itemMenuPedidoResponseTO);
 
             List<ItemMenuIngredienteReferenciaResponseTO> ingredientes = itemMenuIngredienteService
                     .listarIngredientesPorItemMenuID(itemMenuPedidoResponseTO.itemMenuId())
@@ -121,9 +121,10 @@ public class PedidoService {
 
     public PedidoResponseTO buscarPorPedidoId(int pedidoId) {
         return repo.findById(pedidoId)
-                .map(pedido -> new PedidoResponseTO(pedido.getId(), pedido.getClienteId(), pedido.getStatus(),
+                .map(pedido -> new PedidoResponseTO(pedido.getId(), pedido.getClienteId(),
+                        pedido.getStatus(),
                         getItensMenuReferenciaResponseTOs(pedido)))
-                .orElse(new PedidoResponseTO(0, 0, 0, null));
+                .orElseThrow(() -> new RuntimeException("PEDIDO NÃO ENCONTRADO"));
     }
 
 }

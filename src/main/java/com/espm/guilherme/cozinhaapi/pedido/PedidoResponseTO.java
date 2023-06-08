@@ -44,6 +44,9 @@ public record PedidoResponseTO(int id, double total, int clienteId, String statu
             case 4:
                 parsedStatus = "SERVIDO";
                 break;
+            case 5:
+                parsedStatus = "FECHADO";
+                break;
 
             default:
                 throw new RuntimeException("PEDIDO STATUS DESCONHECIDO");
