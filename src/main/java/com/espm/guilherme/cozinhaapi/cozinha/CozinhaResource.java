@@ -26,7 +26,7 @@ public class CozinhaResource {
         return new ResponseEntity<List<PedidoResponseTO>>(service.listarPedidos(situacao), HttpStatus.OK);
     }
 
-    @GetMapping("/listar/preparar")
+    @GetMapping("/preparar")
     public ResponseEntity<List<PedidoResponseTO>> listarPedidosPreparar() {
         return new ResponseEntity<List<PedidoResponseTO>>(service.listarPedidos(1), HttpStatus.OK);
     }

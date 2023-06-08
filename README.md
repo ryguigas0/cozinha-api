@@ -151,7 +151,7 @@
 
 ## Rotas cozinha
 
-- Listar pedidos para preparar: `GET /pedido/listar/preparar`, lista todos pedidos com `status` igual à `AGUARDANDO` ou `statusNumber` igual à `1` do pedido mais velho ao mais recente
+- Listar pedidos para preparar: `GET /pedido/preparar`, lista todos pedidos com `status` igual à `AGUARDANDO` ou `statusNumber` igual à `1` do pedido mais velho ao mais recente
 
 ```json
 // Exemplo de resposta
