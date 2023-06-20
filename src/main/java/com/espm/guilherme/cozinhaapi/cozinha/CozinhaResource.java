@@ -36,7 +36,7 @@ public class CozinhaResource {
             @RequestParam(name = "pedidoId", required = true) int pedidoId) {
         CozinhaResponse response = service.prepararPedido(pedidoId);
 
-        if (response.resultCode() < 0) {
+        if (response.resultCode() == 0) {
             return new ResponseEntity<CozinhaResponse>(response, HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<CozinhaResponse>(response, HttpStatus.BAD_REQUEST);
@@ -50,7 +50,7 @@ public class CozinhaResource {
 
         CozinhaResponse response = service.servirPedido(pedidoId);
 
-        if (response.resultCode() < 0) {
+        if (response.resultCode() == 0) {
             return new ResponseEntity<CozinhaResponse>(response, HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<CozinhaResponse>(response, HttpStatus.BAD_REQUEST);
@@ -64,7 +64,7 @@ public class CozinhaResource {
 
         CozinhaResponse response = service.cancelarPedido(pedidoId);
 
-        if (response.resultCode() < 0) {
+        if (response.resultCode() == 0) {
             return new ResponseEntity<CozinhaResponse>(response, HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<CozinhaResponse>(response, HttpStatus.BAD_REQUEST);

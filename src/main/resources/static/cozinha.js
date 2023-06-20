@@ -1,197 +1,15 @@
 console.log("imported cozinha.js")
 
-const mockPedidos = [
-    {
-        "id": 102,
-        "status": "AGUARDANDO",
-        "statusNumber": 1,
-        "items": [
-            {
-                "nome": "Batatas fritas grande",
-                "ingredientes": [
-                    {
-                        "id": 1,
-                        "nome": "oleo",
-                        "quantidadeNecessaria": 700
-                    },
-                    {
-                        "id": 2,
-                        "nome": "batata",
-                        "quantidadeNecessaria": 8
-                    }
-                ]
-            },
-            {
-                "nome": "Batatas fritas grande",
-                "ingredientes": [
-                    {
-                        "id": 1,
-                        "nome": "oleo",
-                        "quantidadeNecessaria": 700
-                    },
-                    {
-                        "id": 2,
-                        "nome": "batata",
-                        "quantidadeNecessaria": 8
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": 102,
-        "status": "AGUARDANDO",
-        "statusNumber": 1,
-        "items": [
-            {
-                "nome": "Batatas fritas grande",
-                "ingredientes": [
-                    {
-                        "id": 1,
-                        "nome": "oleo",
-                        "quantidadeNecessaria": 700
-                    },
-                    {
-                        "id": 2,
-                        "nome": "batata",
-                        "quantidadeNecessaria": 8
-                    }
-                ]
-            },
-            {
-                "nome": "Batatas fritas grande",
-                "ingredientes": [
-                    {
-                        "id": 1,
-                        "nome": "oleo",
-                        "quantidadeNecessaria": 700
-                    },
-                    {
-                        "id": 2,
-                        "nome": "batata",
-                        "quantidadeNecessaria": 8
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": 102,
-        "status": "AGUARDANDO",
-        "statusNumber": 1,
-        "items": [
-            {
-                "nome": "Batatas fritas grande",
-                "ingredientes": [
-                    {
-                        "id": 1,
-                        "nome": "oleo",
-                        "quantidadeNecessaria": 700
-                    },
-                    {
-                        "id": 2,
-                        "nome": "batata",
-                        "quantidadeNecessaria": 8
-                    }
-                ]
-            },
-            {
-                "nome": "Batatas fritas grande",
-                "ingredientes": [
-                    {
-                        "id": 1,
-                        "nome": "oleo",
-                        "quantidadeNecessaria": 700
-                    },
-                    {
-                        "id": 2,
-                        "nome": "batata",
-                        "quantidadeNecessaria": 8
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": 102,
-        "status": "AGUARDANDO",
-        "statusNumber": 1,
-        "items": [
-            {
-                "nome": "Batatas fritas grande",
-                "ingredientes": [
-                    {
-                        "id": 1,
-                        "nome": "oleo",
-                        "quantidadeNecessaria": 700
-                    },
-                    {
-                        "id": 2,
-                        "nome": "batata",
-                        "quantidadeNecessaria": 8
-                    }
-                ]
-            },
-            {
-                "nome": "Batatas fritas grande",
-                "ingredientes": [
-                    {
-                        "id": 1,
-                        "nome": "oleo",
-                        "quantidadeNecessaria": 700
-                    },
-                    {
-                        "id": 2,
-                        "nome": "batata",
-                        "quantidadeNecessaria": 8
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": 102,
-        "status": "AGUARDANDO",
-        "statusNumber": 1,
-        "items": [
-            {
-                "nome": "Batatas fritas grande",
-                "ingredientes": [
-                    {
-                        "id": 1,
-                        "nome": "oleo",
-                        "quantidadeNecessaria": 700
-                    },
-                    {
-                        "id": 2,
-                        "nome": "batata",
-                        "quantidadeNecessaria": 8
-                    }
-                ]
-            },
-            {
-                "nome": "Batatas fritas grande",
-                "ingredientes": [
-                    {
-                        "id": 1,
-                        "nome": "oleo",
-                        "quantidadeNecessaria": 700
-                    },
-                    {
-                        "id": 2,
-                        "nome": "batata",
-                        "quantidadeNecessaria": 8
-                    }
-                ]
-            }
-        ]
-    }
-]
-
 const pedidosContainer = document.querySelector("#pedidos")
 
+// Templating
+
 function ingrediente2HTML(ingrediente) {
-    return `<div>${ingrediente.nome} / ${ingrediente.quantidadeNecessaria}</div>`
+    return `
+    <div class="pt-2">
+        <div>Nome: ${ingrediente.nome}</div>
+        <div>Quantidade: ${ingrediente.quantidadeNecessaria}</div>
+    </div>`
 }
 
 function ingredientes2HTML(ingredientes) {
@@ -206,8 +24,8 @@ function ingredientes2HTML(ingredientes) {
 
 function item2HTML(item) {
     return `
-    <div>
-        <div>${item.nome}</div>
+    <div class="mx-2">
+        <h5>${item.nome}</h5>
         <div>${ingredientes2HTML(item.ingredientes)}</div>
     </div>
     `
@@ -224,36 +42,169 @@ function items2HTML(items) {
 }
 
 function pedido2HTML(pedido) {
+    let prioridade = ""
+
+    switch (pedido.statusNumber) {
+        case 0:
+            prioridade = "dark"
+            break;
+        case 1:
+            prioridade = "danger"
+            break;
+        case 2:
+            prioridade = "warning"
+            break;
+        case 3:
+            prioridade = "info"
+            break;
+        case 4:
+            prioridade = "light"
+            break;
+        case 5:
+            prioridade = "dark"
+            break;
+
+        default:
+            prioridade = "dark"
+            break;
+    }
+
+    let actions = Number.parseInt(pedido.statusNumber) >= 4 ? "" : `<button class="btn btn-primary" data-pedido-id="${pedido.id}" data-pedido-status-number="${pedido.statusNumber}">Avançar</button>
+    <button class="btn btn-danger" data-pedido-id="${pedido.id}" data-pedido-status-number="${pedido.statusNumber}">Cancelar</button>`
+
     return `
-        <div class="col-6 text-center">
-            <div>
-                ${pedido.id} / ${pedido.status} / ${pedido.status}
+        <div class="card border-dark">
+            <div class="card-body">
+                <h4 class="card-title">Pedido ${pedido.id}</h4>
+                <h5 class="card-substitle alert-${prioridade}">
+                    Situação: ${pedido.status}
+                </h5>
+                <div class="card-text">
+                    <h5> Itens do pedido </h5>
+                    ${items2HTML(pedido.items)}
+                </div>
+                ${actions}
             </div>
-            <div>${items2HTML(pedido.items)}</div>
         </div>
     `
 }
 
-function pedidos2HTML(linhaPedidos) {
+function listarPedios(pedidos) {
     let content = ""
 
-    for (let i = 0; i < linhaPedidos.length; i++) {
-        content += pedido2HTML(linhaPedidos[i])
+    for (let i = 0; i < pedidos.length; i++) {
+        if (Number.parseInt(pedidos[i].statusNumber) != 0 && Number.parseInt(pedidos[i].statusNumber) != 5) {
+            content += pedido2HTML(pedidos[i])
+        }
     }
 
-    return `<div class="row justify-content-center">
-        ${content}
-    </div>`
+    pedidosContainer.innerHTML = `
+        <div class="row justify-content-start w-75">
+            ${content}
+        </div>`
 }
 
-function listarPedios() {
-    pedidosContainer.innerHTML = ""
+// API
 
-    for (let i = 2; i < mockPedidos.length; i += 3) {
-        pedidosContainer.innerHTML += pedidos2HTML([mockPedidos[i - 2], mockPedidos[i - 1], mockPedidos[i]]);
+async function fetchPedidos() {
+    try {
+        const response = await fetch(`/cozinha/pedido/listar`, {
+            method: "get",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        const listaPedidos = await response.json();
+
+        console.log("Sucesso:", listaPedidos);
+
+        return listaPedidos.sort(function(a, b) {return a.statusNumber - b.statusNumber})
+
+    } catch (error) {
+        console.error("List error:", error);
     }
 }
 
-listarPedios()
+async function renderPedidos() {
+    let pedidos = await fetchPedidos()
 
-console.log({ mockPedidos })
+    listarPedios(pedidos)
+}
+
+await renderPedidos()
+
+export async function prepararPedido(pedidoId) {
+    console.log("preparar Pedido")
+
+    try {
+        const response = await fetch(`/cozinha/pedido/preparar?pedidoId=${pedidoId}`, {
+            method: "put",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
+        if (response.status == 202) {
+            location.reload()
+        } else {
+            let body = await response.json()
+
+            console.error(response.status, body)
+
+            alert(body.message)
+        }
+    } catch (error) {
+        console.log("Preparar error: ", error)
+    }
+}
+
+export async function servirPedido(pedidoId) {
+    console.log("servir Pedido")
+
+    try {
+        const response = await fetch(`/cozinha/pedido/servir?pedidoId=${pedidoId}`, {
+            method: "put",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
+        if (response.status == 202) {
+            location.reload()
+        } else {
+            console.error(response.status, await response.json())
+        }
+    } catch (error) {
+        let body = await response.json()
+
+        console.error(response.status, body)
+
+        alert(body.message)
+    }
+}
+
+export async function cancelarPedido(pedidoId) {
+    console.log("cancelar Pedido")
+
+    try {
+        const response = await fetch(`/cozinha/pedido/cancelar?pedidoId=${pedidoId}`, {
+            method: "put",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
+        if (response.status == 202) {
+            location.reload()
+        } else {
+            console.error(response.status, await response.json())
+        }
+    } catch (error) {
+        let body = await response.json()
+
+        console.error(response.status, body)
+
+        alert(body.message)
+    }
+}

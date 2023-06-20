@@ -37,13 +37,13 @@ public class CozinhaService {
             return new CozinhaResponse(-2);
         }
 
-        pedidoService.atualizarPedido(pedidoId, 2);
-
         Map<Integer, Integer> ingredienteIdQuantidade = checarQuantidadeIngredientes(pedido);
 
         if (ingredienteIdQuantidade == null) {
             return new CozinhaResponse(-1);
         }
+
+        pedidoService.atualizarPedido(pedidoId, 2);
 
         for (Map.Entry<Integer, Integer> entry : ingredienteIdQuantidade.entrySet()) {
             int rows = ingredienteService.reduzirQuantidade(entry.getKey(), entry.getValue());
