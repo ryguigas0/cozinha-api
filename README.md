@@ -10,6 +10,11 @@
 3. `mvn clean install` ou `./mvnw clean install`
 4. `java -jar target/cozinha-api-0.0.1-SNAPSHOT.jar`
 
+## Painel de pedidos
+
+1. Use as rotas para criar ingredientes, pratos, clientes e pedidos
+2. Acesse `/backoffice/cozinha`
+
 ## Rotas
 
 - Adicionar cliente: `POST /cliente/cadastrar`
